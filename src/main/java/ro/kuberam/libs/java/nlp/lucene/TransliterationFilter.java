@@ -1,4 +1,4 @@
-package ro.kuberam.libs.java.nlp.transliteration;
+package ro.kuberam.libs.java.nlp.lucene;
 
 import java.io.IOException;
 
@@ -7,11 +7,11 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.sanskritlibrary.webservice.WebServices;
 
-public class TranscodingFilter extends TokenFilter {
+public class TransliterationFilter extends TokenFilter {
 
 	protected CharTermAttribute charTermAttribute = addAttribute(CharTermAttribute.class);
 
-	protected TranscodingFilter(TokenStream input) {
+	protected TransliterationFilter(TokenStream input) {
 		super(input);
 	}
 

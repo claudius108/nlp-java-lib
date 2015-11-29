@@ -1,4 +1,4 @@
-package ro.kuberam.libs.java.nlp.transliteration;
+package ro.kuberam.libs.java.nlp.lucene;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -12,11 +12,11 @@ import org.sanskritlibrary.TranscodingRule;
 import org.sanskritlibrary.webservice.WebServices;
 
 @RunWith(com.carrotsearch.randomizedtesting.RandomizedRunner.class)
-public class SaritAnalyzerTest {
+public class TransliterationAnalyzerTest {
 
 	@Test
 	public void test() throws IOException {
-		Analyzer analyzer = new SaritAnalyzer();
+		Analyzer analyzer = new TransliterationAnalyzer();
 
 		TokenStream tokenStream = analyzer.tokenStream("contents", "कृष्ण उवाच");
 
