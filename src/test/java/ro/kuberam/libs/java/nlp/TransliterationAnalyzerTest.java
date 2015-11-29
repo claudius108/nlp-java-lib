@@ -1,4 +1,4 @@
-package ro.kuberam.libs.java.nlp.lucene;
+package ro.kuberam.libs.java.nlp;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sanskritlibrary.TranscodingRule;
 import org.sanskritlibrary.webservice.WebServices;
+
+import ro.kuberam.libs.java.nlp.lucene.TransliterationAnalyzer;
 
 @RunWith(com.carrotsearch.randomizedtesting.RandomizedRunner.class)
 public class TransliterationAnalyzerTest {
