@@ -1,15 +1,25 @@
 package ro.kuberam.libs.java.nlp;
 
 import java.io.IOException;
-import java.util.Hashtable;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field.Store;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.WildcardQuery;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.RAMDirectory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sanskritlibrary.TranscodingRule;
-import org.sanskritlibrary.webservice.WebServices;
 
 import ro.kuberam.libs.java.nlp.lucene.TransliterationAnalyzer;
 
@@ -17,35 +27,40 @@ import ro.kuberam.libs.java.nlp.lucene.TransliterationAnalyzer;
 public class TransliterationAnalyzerTest {
 
 	@Test
-	public void test() throws IOException {
-		Analyzer analyzer = new TransliterationAnalyzer();
+	public void test1() throws IOException {
+		Directory index = new RAMDirectory();
+		IndexWriterConfig config = new IndexWriterConfig(new TransliterationAnalyzer())
+				.setOpenMode(OpenMode.CREATE);
+		IndexWriter writer = new IndexWriter(index, config);
+		Document document1 = new Document();
+		document1.add(new TextField("title", "कृष्ण उवाच", Store.YES));
 
-		TokenStream tokenStream = analyzer.tokenStream("contents", "कृष्ण उवाच");
+		Document document2 = new Document();
+		document2.add(new TextField("title", "कृष्ण", Store.YES));
 
-		analyzer.close();
+		writer.addDocument(document1);
+		writer.addDocument(document2);
+		writer.commit();
+		writer.close();
 
-		// OffsetAttribute offsetAttribute =
-		// tokenStream.addAttribute(OffsetAttribute.class);
-		CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
-
-		tokenStream.reset();
-		while (tokenStream.incrementToken()) {
-			// int startOffset = offsetAttribute.startOffset();
-			// int endOffset = offsetAttribute.endOffset();
-			String term = charTermAttribute.toString();
-			System.out.print("[" + term + "] ");
-
-			String processedTerm = term;
-			Hashtable<String, Object> h = new Hashtable<String, Object>();
-			TranscodingRule dtr = (TranscodingRule) h.get("defaultTranscodingRule");
-			try {
-				processedTerm = WebServices.transformString(processedTerm, "deva", "slp1", "/home/claudius/TranscodeFile/transcoders");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-//			System.out.print(" = " + processedTerm + " ");
+		int limit = 10;
+		try (IndexReader reader = DirectoryReader.open(index)) {
+			Query query = new WildcardQuery(new Term("title", "kfzRa*"));
+			printSearchResults(limit, query, reader);
 		}
-		tokenStream.end();
-		tokenStream.close();
+
+		index.close();
+	}
+
+	private void printSearchResults(final int limit, final Query query, final IndexReader reader)
+			throws IOException {
+		IndexSearcher searcher = new IndexSearcher(reader);
+		TopDocs docs = searcher.search(query, limit);
+
+		System.out.println(docs.totalHits + " found for query: " + query);
+
+		for (final ScoreDoc scoreDoc : docs.scoreDocs) {
+			System.out.println(searcher.doc(scoreDoc.doc));
+		}
 	}
 }
