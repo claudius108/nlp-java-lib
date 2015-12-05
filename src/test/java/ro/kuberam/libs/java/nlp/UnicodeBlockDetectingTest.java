@@ -11,32 +11,32 @@ public class UnicodeBlockDetectingTest {
 
 	@Test
 	public void testDetectDevanagari() throws IOException {
-		String input = "ऽगन्तवो";
+		String input = "ऽगन्तवो․";
 
-		assertTrue(input.matches("[\\p{InDevanagari}]*+"));
+		assertTrue(input.matches("[\\p{InDevanagari}\\p{InGeneral_Punctuation}]*+"));
 	}
 
 	@Test
 	public void testDetectDevanagariAndLatin() throws IOException {
-		String input = "ऽगन्तवोa";
+		String input = "ऽगन्तवोa․";
 
-		assertFalse(input.matches("[\\p{InDevanagari}]*+"));
+		assertFalse(input.matches("[\\p{InDevanagari}\\p{InGeneral_Punctuation}]*+"));
 	}
 
 	@Test
 	public void testDetectRomanized() throws IOException {
-		String input = "rephavarṇotpādakamoṣṭhapadmaṃ ṣoḍaśasirāvṛtam";
+		String input = "rephavarṇotpādakamoṣṭhapadmaṃ ṣoḍaśasirāvṛtam․";
 
 		assertTrue(input
-				.matches("[\\p{InBasic_Latin}\\p{InLatin_Extended_A}\\p{InLatin_Extended_Additional}]*+"));
+				.matches("[\\p{InBasic_Latin}\\p{InLatin_Extended_A}\\p{InLatin_Extended_Additional}\\p{InGeneral_Punctuation}]*+"));
 	}
 
 	@Test
 	public void testDetectRomanizedAndDevanagari() throws IOException {
-		String input = "rephavarṇotpādakamoṣṭhapadmaṃ ṣoḍaśasirāvṛtamन्";
+		String input = "rephavarṇotpādakamoṣṭhapadmaṃ ṣoḍaśasirāvṛtamन्․";
 
 		assertFalse(input
-				.matches("[\\p{InBasic_Latin}\\p{InLatin_Extended_A}\\p{InLatin_Extended_Additional}]*+"));
+				.matches("[\\p{InBasic_Latin}\\p{InLatin_Extended_A}\\p{InLatin_Extended_Additional}\\p{InGeneral_Punctuation}]*+"));
 	}
 
 }
