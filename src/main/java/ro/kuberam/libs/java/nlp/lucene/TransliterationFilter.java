@@ -5,18 +5,27 @@ import java.io.IOException;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.util.Version;
 import org.sanskritlibrary.webservice.WebServices;
 
 public class TransliterationFilter extends TokenFilter {
 
+	private final Version matchVersion;
 	protected CharTermAttribute charTermAttribute = addAttribute(CharTermAttribute.class);
 
-	protected TransliterationFilter(TokenStream input) {
-		super(input);
+	//this is for Lucene 5.3.1.
+//	protected TransliterationFilter(TokenStream input) {
+//		super(input);
+//	}
+
+	//this is for Lucene 4.4.0
+	public TransliterationFilter(Version matchVersion, TokenStream in) {
+		super(in);
+		this.matchVersion = matchVersion;
 	}
 
 	@Override
-	public boolean incrementToken() throws IOException {
+	final public boolean incrementToken() throws IOException {
 		if (input.incrementToken()) {
 			String currentToken = this.input.getAttribute(CharTermAttribute.class).toString().trim();
 

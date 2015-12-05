@@ -18,6 +18,7 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.util.Version;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -25,18 +26,26 @@ import ro.kuberam.libs.java.nlp.lucene.TransliterationAnalyzer;
 
 @RunWith(com.carrotsearch.randomizedtesting.RandomizedRunner.class)
 public class TransliterationAnalyzerTest {
+	
+	private Version matchVersion = Version.LUCENE_44;
 
 	@Test
 	public void test1() throws IOException {
 		Directory index = new RAMDirectory();
-		IndexWriterConfig config = new IndexWriterConfig(new TransliterationAnalyzer())
-				.setOpenMode(OpenMode.CREATE);
+		
+		
+//		IndexWriterConfig config = new IndexWriterConfig(new TransliterationAnalyzer())
+//				.setOpenMode(OpenMode.CREATE);
+		IndexWriterConfig config = new IndexWriterConfig(matchVersion, new TransliterationAnalyzer())
+		.setOpenMode(OpenMode.CREATE);		
+		
+		
 		IndexWriter writer = new IndexWriter(index, config);
 		Document document1 = new Document();
-		document1.add(new TextField("title", "कृष्ण उवाच", Store.YES));
+		document1.add(new TextField("title", "तस्मात् उवाच", Store.YES));
 
 		Document document2 = new Document();
-		document2.add(new TextField("title", "कृष्ण", Store.YES));
+		document2.add(new TextField("title", "तस्मात्", Store.YES));
 
 		writer.addDocument(document1);
 		writer.addDocument(document2);
@@ -45,7 +54,7 @@ public class TransliterationAnalyzerTest {
 
 		int limit = 10;
 		try (IndexReader reader = DirectoryReader.open(index)) {
-			Query query = new WildcardQuery(new Term("title", "kfzRa*"));
+			Query query = new WildcardQuery(new Term("title", "tasmAt*"));
 			printSearchResults(limit, query, reader);
 		}
 
