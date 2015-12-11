@@ -11,6 +11,10 @@ public class TransliterationAnalyzer extends Analyzer {
 
 	private Version matchVersion = Version.LUCENE_44;
 
+	public TransliterationAnalyzer() {
+		super();
+	}
+
 	@Override
 	protected TokenStreamComponents createComponents(final String fieldName, final Reader reader) {
 		StandardTokenizer tokenizer = new StandardTokenizer(matchVersion, reader);
