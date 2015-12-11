@@ -26,20 +26,19 @@ import ro.kuberam.libs.java.nlp.lucene.TransliterationAnalyzer;
 
 @RunWith(com.carrotsearch.randomizedtesting.RandomizedRunner.class)
 public class TransliterationAnalyzerTest {
-	
+
 	private Version matchVersion = Version.LUCENE_44;
 
 	@Test
 	public void test1() throws IOException {
 		Directory index = new RAMDirectory();
-		
-		
-//		IndexWriterConfig config = new IndexWriterConfig(new TransliterationAnalyzer())
-//				.setOpenMode(OpenMode.CREATE);
+
+		// IndexWriterConfig config = new IndexWriterConfig(new
+		// TransliterationAnalyzer())
+		// .setOpenMode(OpenMode.CREATE);
 		IndexWriterConfig config = new IndexWriterConfig(matchVersion, new TransliterationAnalyzer())
-		.setOpenMode(OpenMode.CREATE);		
-		
-		
+				.setOpenMode(OpenMode.CREATE);
+
 		IndexWriter writer = new IndexWriter(index, config);
 		Document document1 = new Document();
 		document1.add(new TextField("title", "तस्मात् उवाच", Store.YES));
@@ -47,8 +46,16 @@ public class TransliterationAnalyzerTest {
 		Document document2 = new Document();
 		document2.add(new TextField("title", "तस्मात्", Store.YES));
 
+		Document document3 = new Document();
+		document3.add(new TextField("title", "tasmāt uvāca", Store.YES));
+
+		Document document4 = new Document();
+		document4.add(new TextField("title", "tasmāt", Store.YES));
+
 		writer.addDocument(document1);
 		writer.addDocument(document2);
+		writer.addDocument(document3);
+		writer.addDocument(document4);
 		writer.commit();
 		writer.close();
 
