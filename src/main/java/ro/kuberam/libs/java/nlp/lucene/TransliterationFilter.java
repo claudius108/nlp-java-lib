@@ -13,12 +13,12 @@ public class TransliterationFilter extends TokenFilter {
 	private final Version matchVersion;
 	protected CharTermAttribute charTermAttribute = addAttribute(CharTermAttribute.class);
 
-	//this is for Lucene 5.3.1.
-//	protected TransliterationFilter(TokenStream input) {
-//		super(input);
-//	}
+	// this is for Lucene 5.3.1.
+	// protected TransliterationFilter(TokenStream input) {
+	// super(input);
+	// }
 
-	//this is for Lucene 4.4.0
+	// this is for Lucene 4.4.0
 	public TransliterationFilter(Version matchVersion, TokenStream in) {
 		super(in);
 		this.matchVersion = matchVersion;
@@ -30,8 +30,19 @@ public class TransliterationFilter extends TokenFilter {
 			String currentToken = this.input.getAttribute(CharTermAttribute.class).toString().trim();
 
 			String transcodeCurrentToken = null;
+			String sourceEncoding = "";
+
+			if (currentToken.matches("[\\p{InDevanagari}\\p{InGeneral_Punctuation}]*+")) {
+				sourceEncoding = "deva";
+			}
+
+			if (currentToken
+					.matches("[\\p{InBasic_Latin}\\p{InLatin_Extended_A}\\p{InLatin_Extended_Additional}\\p{InGeneral_Punctuation}]*+")) {
+				sourceEncoding = "roman";
+			}
+
 			try {
-				transcodeCurrentToken = WebServices.transformString(currentToken, "deva", "slp1",
+				transcodeCurrentToken = WebServices.transformString(currentToken, sourceEncoding, "slp1",
 						"/home/claudius/TranscodeFile/transcoders");
 			} catch (Exception e) {
 				e.printStackTrace();
