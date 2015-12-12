@@ -1,4 +1,4 @@
-package ro.kuberam.libs.java.nlp;
+package ro.kuberam.libs.java.nlp.lucene.analyzers.transcoding;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ import org.apache.lucene.util.Version;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import ro.kuberam.libs.java.nlp.lucene.TransliterationAnalyzer;
+import ro.kuberam.libs.java.nlp.lucene.analyzers.transcoding.TransliterationAnalyzer;
 
 @RunWith(com.carrotsearch.randomizedtesting.RandomizedRunner.class)
 public class TransliterationAnalyzerTest {

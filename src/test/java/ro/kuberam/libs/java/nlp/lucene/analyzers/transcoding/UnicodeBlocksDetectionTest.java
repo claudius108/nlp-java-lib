@@ -1,4 +1,4 @@
-package ro.kuberam.libs.java.nlp;
+package ro.kuberam.libs.java.nlp.lucene.analyzers.transcoding;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import ro.kuberam.libs.java.nlp.lucene.UnicodeBlocksDetection;
+import ro.kuberam.libs.java.nlp.lucene.analyzers.transcoding.UnicodeBlocksDetection;
 
 public class UnicodeBlocksDetectionTest {
 

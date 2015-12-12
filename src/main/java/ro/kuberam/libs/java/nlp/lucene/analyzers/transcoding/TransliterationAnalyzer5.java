@@ -1,4 +1,4 @@
-package ro.kuberam.libs.java.nlp.lucene;
+package ro.kuberam.libs.java.nlp.lucene.analyzers.transcoding;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
