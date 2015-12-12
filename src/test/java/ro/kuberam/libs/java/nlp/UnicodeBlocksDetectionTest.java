@@ -7,36 +7,35 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class UnicodeBlockDetectingTest {
+import ro.kuberam.libs.java.nlp.lucene.UnicodeBlocksDetection;
+
+public class UnicodeBlocksDetectionTest {
 
 	@Test
 	public void testDetectDevanagari() throws IOException {
 		String input = "ऽगन्तवो․";
 
-		assertTrue(input.matches("[\\p{InDevanagari}\\p{InGeneral_Punctuation}]*+"));
+		assertTrue(UnicodeBlocksDetection.detectDevanagariBlocks(input));
 	}
 
 	@Test
 	public void testDetectDevanagariAndLatin() throws IOException {
 		String input = "ऽगन्तवोa․";
 
-		assertFalse(input.matches("[\\p{InDevanagari}\\p{InGeneral_Punctuation}]*+"));
+		assertFalse(UnicodeBlocksDetection.detectDevanagariBlocks(input));
 	}
 
 	@Test
 	public void testDetectRomanized() throws IOException {
-		String input = " na cāsaṃyukte dravye sayogajanyasya guṇasyotpattir iti jñānotpattidarśanād ātmamanaḥsannikarṣaḥ kāraṇam/";
+		String input = " na cāsaṃyukte dravye sayogajanyasya guṇasyotpattir iti jnānotpattidarśanād ātmamanaḥsannikarṣaḥ kāraṇam/";
 
-		assertTrue(input
-				.matches("[\\p{InBasic_Latin}\\p{InLatin_Extended_A}\\p{InLatin_Extended_Additional}\\p{InGeneral_Punctuation}]*+"));
+		assertTrue(UnicodeBlocksDetection.detectDevanagariTransliterationBlocks(input));
 	}
 
 	@Test
 	public void testDetectRomanizedAndDevanagari() throws IOException {
 		String input = "rephavarṇotpādakamoṣṭhapadmaṃ ṣoḍaśasirāvṛtamन्․";
 
-		assertFalse(input
-				.matches("[\\p{InBasic_Latin}\\p{InLatin_Extended_A}\\p{InLatin_Extended_Additional}\\p{InGeneral_Punctuation}]*+"));
+		assertFalse(UnicodeBlocksDetection.detectDevanagariTransliterationBlocks(input));
 	}
-
 }
