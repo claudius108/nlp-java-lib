@@ -22,10 +22,10 @@ import org.apache.lucene.util.Version;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import ro.kuberam.libs.java.nlp.lucene.analyzers.transcoding.TransliterationAnalyzer;
+import ro.kuberam.libs.java.nlp.lucene.analyzers.transcoding.TranscodingAnalyzer;
 
 @RunWith(com.carrotsearch.randomizedtesting.RandomizedRunner.class)
-public class TransliterationAnalyzerTest {
+public class TranscodingAnalyzerTest {
 
 	private Version matchVersion = Version.LUCENE_44;
 
@@ -36,7 +36,7 @@ public class TransliterationAnalyzerTest {
 		// IndexWriterConfig config = new IndexWriterConfig(new
 		// TransliterationAnalyzer())
 		// .setOpenMode(OpenMode.CREATE);
-		IndexWriterConfig config = new IndexWriterConfig(matchVersion, new TransliterationAnalyzer(matchVersion))
+		IndexWriterConfig config = new IndexWriterConfig(matchVersion, new TranscodingAnalyzer(matchVersion))
 				.setOpenMode(OpenMode.CREATE);
 
 		IndexWriter writer = new IndexWriter(index, config);

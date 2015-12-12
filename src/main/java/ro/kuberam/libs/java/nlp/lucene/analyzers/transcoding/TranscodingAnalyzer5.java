@@ -5,7 +5,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 
-public class TransliterationAnalyzer5 {
+public class TranscodingAnalyzer5 {
 
 //	@Override
 //	protected TokenStreamComponents createComponents(String fieldName) {

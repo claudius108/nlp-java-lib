@@ -8,7 +8,7 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 import org.sanskritlibrary.webservice.WebServices;
 
-public class TransliterationFilter extends TokenFilter {
+public class TranscodingFilter extends TokenFilter {
 
 	private final Version matchVersion;
 	protected CharTermAttribute charTermAttribute = addAttribute(CharTermAttribute.class);
@@ -19,7 +19,7 @@ public class TransliterationFilter extends TokenFilter {
 	// }
 
 	// this is for Lucene 4.4.0
-	public TransliterationFilter(Version matchVersion, TokenStream in) {
+	public TranscodingFilter(Version matchVersion, TokenStream in) {
 		super(in);
 		this.matchVersion = matchVersion;
 	}
