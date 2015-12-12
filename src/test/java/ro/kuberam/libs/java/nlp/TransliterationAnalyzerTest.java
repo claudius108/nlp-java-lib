@@ -36,7 +36,7 @@ public class TransliterationAnalyzerTest {
 		// IndexWriterConfig config = new IndexWriterConfig(new
 		// TransliterationAnalyzer())
 		// .setOpenMode(OpenMode.CREATE);
-		IndexWriterConfig config = new IndexWriterConfig(matchVersion, new TransliterationAnalyzer())
+		IndexWriterConfig config = new IndexWriterConfig(matchVersion, new TransliterationAnalyzer(matchVersion))
 				.setOpenMode(OpenMode.CREATE);
 
 		IndexWriter writer = new IndexWriter(index, config);
@@ -50,7 +50,7 @@ public class TransliterationAnalyzerTest {
 		document3.add(new TextField("title", "tasmāt uvāca", Store.YES));
 
 		Document document4 = new Document();
-		document4.add(new TextField("title", "tasmāt", Store.YES));
+		document4.add(new TextField("title", "tasmātñ", Store.YES));
 
 		writer.addDocument(document1);
 		writer.addDocument(document2);

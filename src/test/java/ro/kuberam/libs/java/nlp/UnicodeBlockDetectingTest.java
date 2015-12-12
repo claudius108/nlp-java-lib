@@ -25,7 +25,7 @@ public class UnicodeBlockDetectingTest {
 
 	@Test
 	public void testDetectRomanized() throws IOException {
-		String input = "rephavarṇotpādakamoṣṭhapadmaṃ ṣoḍaśasirāvṛtam․";
+		String input = " na cāsaṃyukte dravye sayogajanyasya guṇasyotpattir iti jñānotpattidarśanād ātmamanaḥsannikarṣaḥ kāraṇam/";
 
 		assertTrue(input
 				.matches("[\\p{InBasic_Latin}\\p{InLatin_Extended_A}\\p{InLatin_Extended_Additional}\\p{InGeneral_Punctuation}]*+"));

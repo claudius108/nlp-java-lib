@@ -29,7 +29,7 @@ public class TransliterationFilter extends TokenFilter {
 		if (input.incrementToken()) {
 			String currentToken = this.input.getAttribute(CharTermAttribute.class).toString().trim();
 
-			String transcodeCurrentToken = null;
+			String transcodeCurrentToken = currentToken;
 			String sourceEncoding = "";
 
 			if (currentToken.matches("[\\p{InDevanagari}\\p{InGeneral_Punctuation}]*+")) {
@@ -41,11 +41,13 @@ public class TransliterationFilter extends TokenFilter {
 				sourceEncoding = "roman";
 			}
 
-			try {
-				transcodeCurrentToken = WebServices.transformString(currentToken, sourceEncoding, "slp1",
-						"/home/claudius/TranscodeFile/transcoders");
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (!sourceEncoding.equals("")) {
+				try {
+					transcodeCurrentToken = WebServices.transformString(currentToken, sourceEncoding,
+							"slp1", "/home/claudius/TranscodeFile/transcoders");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 
 			this.charTermAttribute.setEmpty().append(transcodeCurrentToken);

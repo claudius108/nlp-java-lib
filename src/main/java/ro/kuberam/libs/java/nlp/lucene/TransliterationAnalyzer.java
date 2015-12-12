@@ -11,7 +11,7 @@ public class TransliterationAnalyzer extends Analyzer {
 
 	private Version matchVersion = Version.LUCENE_44;
 
-	public TransliterationAnalyzer() {
+	public TransliterationAnalyzer(Version matchVersion) {
 		super();
 	}
 
